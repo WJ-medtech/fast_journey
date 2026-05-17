@@ -481,7 +481,7 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
       <div class="header-progress-fill" id="headerBar" style="width:0%"></div>
     </div>
   </div>
-  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/22</div>
+  <div style="font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--blue-light);flex-shrink:0;" id="progressLabel">0/23</div>
 </div>
 
 <!-- ===== SCROLL CONTENT ===== -->
@@ -2173,7 +2173,7 @@ function warpTo(url) {
    スクリーン管理
 ===================================================== */
 let currentScreen = 0;
-const totalScreens = 23; // 0〜22
+const totalScreens = 24; // インデックス0〜23（要素23個、id飛び含む）
 const screens = document.querySelectorAll('.screen');
 
 function updateProgress() {
@@ -2240,7 +2240,7 @@ function flashHeader() {
 
 /* goToView: マップカードから特定ゾーンへジャンプ */
 function goToView(id) {
-  const map = {ep:1, rub:9, lup:17, pelvis:22};
+  const map = {ep:1, rub:9, lup:16, pelvis:22};
   if (map[id] !== undefined) {
     playSound('tap');
     screens[currentScreen].classList.remove('active');
