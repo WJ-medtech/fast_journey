@@ -409,7 +409,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       </div>
     </div>
     <div class="vitals-bar">
-      <span class="vital-chip">BP 92/60 🔴</span>
+      <span class="vital-chip">BP 90/60 🔴</span>
       <span class="vital-chip warn">HR 118 ⚡</span>
       <span class="vital-chip warn">RR 22</span>
       <span class="vital-chip ok">SpO2 98%</span>
@@ -426,7 +426,7 @@ html,body{width:100%;min-height:100vh;font-family:'Noto Sans JP',sans-serif;
       <div class="monitor-card" id="monitorCard">
         <div class="monitor-label">📡 VITAL MONITOR</div>
         <div class="monitor-vitals">
-          <div class="mv-item"><div class="mv-val danger">92/60</div><div class="mv-label">BP mmHg</div></div>
+          <div class="mv-item"><div class="mv-val danger">90/60</div><div class="mv-label">BP mmHg</div></div>
           <div class="mv-item"><div class="mv-val warn">118</div><div class="mv-label">HR /min</div></div>
           <div class="mv-item"><div class="mv-val warn">22</div><div class="mv-label">RR /min</div></div>
           <div class="mv-item"><div class="mv-val">98</div><div class="mv-label">SpO2 %</div></div>
@@ -978,7 +978,7 @@ const STEPS=[
     pc.innerHTML=`<div class="pc-title">🧑 患者情報</div>
       <div class="pc-tags">
         <span class="pc-tag">25歳 男性</span>
-        <span class="pc-tag red">BP 92/60 🔴</span>
+        <span class="pc-tag red">BP 90/60 🔴</span>
         <span class="pc-tag red">HR 118 ⚡</span>
         <span class="pc-tag">RR 22</span><span class="pc-tag">SpO2 98%</span><span class="pc-tag">GCS 15</span>
       </div>
@@ -991,7 +991,7 @@ const STEPS=[
     app(pc);
     sb('sonobo_8.png',
       `キャプテン、患者が搬入されました。<br>
-       <span class="red">BP 92/60、HR 118</span>……バイタルが不安定だ。<br>
+       <span class="red">BP 90/60、HR 118</span>……バイタルが不安定だ。<br>
        外出血はない。<strong>内出血を疑う状況</strong>だ。<br><br>
        まずJATECに準拠した<strong>ABCDE評価</strong>を行う。<br>
        A（気道）・B（呼吸）・C（循環）と評価を進めると、<strong>Cの段階で出血源の検索が必要</strong>になる。<br>
@@ -1132,7 +1132,7 @@ const STEPS=[
      ・モリソン窩：<span class="neg-txt">陰性（液体なし）</span><br>
      ・脾周囲　　：<span class="pos-txt">陽性 ← 脾周囲に液体貯留あり</span><br>
      ・膀胱直腸窩：<span class="pos-txt">陽性 ← 膀胱直腸窩に液体あり</span><br><br>
-     バイタルは依然として<span class="red">BP 92/60、HR 118</span>。<br>
+     バイタルは依然として<span class="red">BP 90/60、HR 118</span>。<br>
      <strong>今すぐ何をする？</strong>`);
 
   cho('▶ FAST陽性・バイタル不安定 → 次のアクションは？',[
