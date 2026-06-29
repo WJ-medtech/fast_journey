@@ -289,6 +289,27 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
   border:none;color:white;
   box-shadow:0 4px 18px rgba(140,50,230,.4);}
 
+/* ===== ソノボ指導医 バナー ===== */
+.sensei-banner{
+  margin:10px 16px 0;
+  background:linear-gradient(135deg,rgba(45,212,191,.16),rgba(13,61,56,.26));
+  border:1.5px solid rgba(45,212,191,.4);border-radius:var(--radius);
+  padding:14px 14px 14px;display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:inherit;cursor:pointer;
+  transition:transform .18s ease;
+  box-shadow:0 0 24px rgba(45,212,191,.12),inset 0 1px 0 rgba(255,255,255,.06);
+  min-width:0;overflow:hidden;}
+.sensei-banner:active{transform:scale(.98);}
+.sensei-banner-icon{font-size:32px;flex-shrink:0;animation:float 3.2s ease-in-out infinite;}
+.sensei-banner-body{flex:1;min-width:0;overflow:hidden;}
+.sensei-banner-subtitle{font-size:9px;color:#5eead4;letter-spacing:1.5px;font-weight:700;
+  word-break:break-all;overflow-wrap:break-word;}
+.sensei-banner-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15.5px;font-weight:900;
+  color:white;margin:2px 0 3px;word-break:break-all;overflow-wrap:break-word;}
+.sensei-banner-desc{font-size:11px;color:rgba(255,255,255,.6);line-height:1.55;
+  word-break:break-all;overflow-wrap:break-word;}
+.sensei-banner-arrow{font-size:20px;color:#5eead4;flex-shrink:0;}
+
 
 .modal-overlay{display:none;position:fixed;inset:0;z-index:200;
   background:rgba(2,6,18,.9);backdrop-filter:blur(10px);
@@ -435,6 +456,17 @@ p,h1,h2,h3,span,li,a,.text-elem{word-break:break-all;overflow-wrap:break-word;mi
       <a class="ai-btn-open" href="https://sonoforge.streamlit.app/" target="_blank" onclick="playSound('warp')">🔬 AI解析を開く</a>
     </div>
   </div>
+
+  <!-- ソノボ指導医 バナー -->
+  <a class="sensei-banner" href="sensei.html" onclick="playSound('tap')">
+    <div class="sensei-banner-icon">🩺</div>
+    <div class="sensei-banner-body">
+      <div class="sensei-banner-subtitle">SONOBO SENSEI — セルフチェック</div>
+      <div class="sensei-banner-title">ソノボ指導医に相談する</div>
+      <div class="sensei-banner-desc">自分の画像が合っているか不安なときは、よくある失敗例と見比べよう（3視野対応）</div>
+    </div>
+    <div class="sensei-banner-arrow">›</div>
+  </a>
 
   <!-- セクションラベル -->
   <div class="section-label">🌌 ギャラクシーマップ</div>
@@ -795,6 +827,7 @@ const tips=[
   '各MISSIONをクリアすると特別な報酬がもらえるぞ🏅',
   '恒星ファスタリスをクリアしたキャプテンには称号が授与される！',
   'AI TOOLはエコー画像の解析に使ってみよう🤖',
+  '画像が合ってるか不安なら🩺ソノボ指導医でセルフチェックしよう！',
 ];
 let ti=0;
 const tipEl=document.getElementById('tipText');
