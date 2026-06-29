@@ -292,6 +292,16 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
   word-break:break-all;overflow-wrap:break-word;min-width:0;}
 .next-btn:active{transform:scale(.98);box-shadow:0 3px 14px rgba(21,101,216,.4);}
 
+/* ===== 画面下部の「前のページに戻る」ボタン ===== */
+.bottom-nav-row{display:flex;gap:10px;margin-top:10px;min-width:0;overflow:hidden;align-items:stretch;}
+.bottom-nav-row>.next-btn,.bottom-nav-row>.fastaris-btn{margin-top:0!important;width:auto;flex:1;min-width:0;}
+.back-btn-bottom{flex:0 0 56px;width:56px;padding:0;min-width:0;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--radius);cursor:pointer;color:rgba(255,255,255,.85);font-size:20px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s ease,transform .2s ease;}
+.back-btn-bottom:active{background:rgba(255,255,255,.2);transform:scale(.95);}
+
 .home-btn{width:100%;padding:14px 24px;margin-top:10px;
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
   border-radius:var(--radius);cursor:pointer;
@@ -472,8 +482,8 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
 
 <!-- ===== HEADER ===== -->
 <div class="page-header">
-  <!-- screen-0ではhome.htmlへ戻る、それ以外はprevScreen() -->
-  <button class="prev-btn" id="headerBackBtn" onclick="handleBack()" title="ひとつ前へ戻る">←</button>
+  <!-- 画面上部は常に銀河マップ（home.html）へ戻るボタン -->
+  <button class="back-btn" id="headerBackBtn" onclick="warpTo('home.html')" title="銀河マップに戻る">🗺️</button>
   <div style="flex:1;min-width:0;overflow:hidden;">
     <div class="page-step-label">PLANET PROBIA — MISSION 4</div>
     <div class="page-title">実際に当ててみよう 📡</div>
@@ -1499,6 +1509,10 @@ p,h1,h2,h3,span,li,.text-elem{word-break:break-all;overflow-wrap:break-word;min-
         <span class="hi-icon">📌</span>
         <p>プローブを<strong>1肋間頭側に上げて</strong>患者さんに息を吸ってもらう → カーテンサインを確認（右胸水評価）</p>
       </div>
+      <div class="note-box" style="margin-bottom:14px;">
+        <span style="font-size:18px;flex-shrink:0;">👀</span>
+        <p><strong style="color:rgba(200,225,255,.95);">画面に映すのは肝臓だけでOK！</strong><br>1肋間上げると、モリソン窩のときと違って<strong>腎臓は画面に見えなくて大丈夫</strong>。<strong style="color:var(--gold)">肝臓だけ</strong>が画面に映っていれば、カーテンサインの確認はできる。</p>
+      </div>
       <div class="img-card">
         <img src="images/img_07.jpeg" alt="カーテンサイン">
         <div class="img-caption">▲ カーテンサインの様子</div>
@@ -2180,15 +2194,6 @@ function updateProgress() {
   const pct = (currentScreen / (totalScreens - 1)) * 100;
   document.getElementById('headerBar').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = currentScreen + '/' + (totalScreens - 1);
-  // 戻るボタンの見た目をscreen-0のときに変える
-  const btn = document.getElementById('headerBackBtn');
-  if (currentScreen === 0) {
-    btn.style.opacity = '0.5';
-    btn.title = 'ホームに戻る';
-  } else {
-    btn.style.opacity = '1';
-    btn.title = 'ひとつ前へ戻る';
-  }
 }
 
 function nextScreen() {
@@ -2361,9 +2366,30 @@ function toggleTroubleItem(el) {
 }
 
 /* =====================================================
+   画面下部の「前のページに戻る」ボタンを動的に追加
+===================================================== */
+function initBottomBackButtons() {
+  document.querySelectorAll('.next-btn, .fastaris-btn').forEach(btn => {
+    if (btn.closest('.bottom-nav-row')) return; // 既に追加済みならスキップ
+    const row = document.createElement('div');
+    row.className = 'bottom-nav-row';
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button';
+    backBtn.className = 'back-btn-bottom';
+    backBtn.title = '前の画面に戻る';
+    backBtn.textContent = '←';
+    backBtn.onclick = handleBack;
+    btn.parentNode.insertBefore(row, btn);
+    row.appendChild(backBtn);
+    row.appendChild(btn);
+  });
+}
+
+/* =====================================================
    初期化
 ===================================================== */
 updateProgress();
+initBottomBackButtons();
 </script>
 </body>
 </html>
