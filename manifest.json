@@ -1,0 +1,26 @@
+{
+  "name": "FAST Journey – ソノボくんと学ぶ",
+  "short_name": "FAST Journey",
+  "description": "初学者でも一人でFAST（外傷超音波検査）を習得できる学習アプリ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "assets/sonobo_1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/sonobo_1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

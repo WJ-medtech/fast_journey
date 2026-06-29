@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>FAST Journey – ソノボくんと学ぶ</title>
+
+<!-- ===== PWA設定 ===== -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/sonobo_1.png">
+<link rel="icon" href="assets/sonobo_1.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FAST Journey">
+<meta name="theme-color" content="#0a1628">
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -157,6 +168,46 @@ p,h1,h2,h3,span,li,.text-elem{
 
 .version-tag{font-size:10px;color:rgba(255,255,255,.2);letter-spacing:1px;text-align:center;
   margin-top:14px;opacity:0;animation:fadeIn .8s 2.8s ease forwards;}
+
+/* ===== ホーム画面追加ガイド（PWA） ===== */
+.install-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  background:rgba(4,13,31,.88);backdrop-filter:blur(6px);padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .35s ease;
+  min-width:0;overflow:hidden;}
+.install-overlay.show{opacity:1;pointer-events:auto;}
+.install-card{position:relative;width:100%;max-width:380px;max-height:88vh;overflow-y:auto;
+  background:linear-gradient(160deg,rgba(20,40,80,.95),rgba(10,22,48,.97));
+  border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-lg);
+  padding:26px 22px 24px;box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);
+  transform:scale(.9) translateY(20px);transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  min-width:0;}
+.install-overlay.show .install-card{transform:scale(1) translateY(0);}
+.install-sonobo{width:84px;height:84px;object-fit:contain;display:block;margin:0 auto 14px;
+  filter:drop-shadow(0 8px 20px rgba(21,101,216,.6));}
+.install-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;text-align:center;
+  margin-bottom:8px;color:#fff;word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.install-desc{font-size:13px;line-height:1.7;color:rgba(255,255,255,.75);text-align:center;margin-bottom:20px;
+  word-break:break-all;overflow-wrap:break-word;min-width:0;}
+.install-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;min-width:0;overflow:hidden;}
+.install-step{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:10px 12px;
+  min-width:0;overflow:hidden;}
+.install-step-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--blue-vivid);
+  display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;
+  font-size:12px;font-weight:700;color:#fff;}
+.install-step-icon{flex-shrink:0;font-size:19px;width:26px;text-align:center;}
+.install-step-text{font-size:13px;line-height:1.5;color:rgba(255,255,255,.88);
+  word-break:break-all;overflow-wrap:break-word;min-width:0;flex:1;}
+.install-step-text b{color:var(--blue-light);}
+.btn-install-ok{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  padding:15px;background:linear-gradient(135deg,var(--blue-vivid),#0d4fc0);border:none;
+  border-radius:var(--radius);color:#fff;font-family:'Zen Kaku Gothic New',sans-serif;
+  font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px 24px rgba(21,101,216,.5);
+  min-width:0;}
+.btn-install-ok:active{transform:scale(.97);}
+.btn-install-skip{display:block;width:100%;text-align:center;background:none;border:none;
+  color:rgba(255,255,255,.45);font-size:12px;margin-top:14px;cursor:pointer;
+  text-decoration:underline;min-width:0;word-break:break-all;overflow-wrap:break-word;}
 </style>
 </head>
 <body>
@@ -218,7 +269,8 @@ p,h1,h2,h3,span,li,.text-elem{
   </div>
 
   <!-- スタートボタン -->
-  <button class="btn-start" onclick="warpTo('home.html')">
+  <!-- スタートボタン -->
+  <button class="btn-start" onclick="maybeShowInstallGuide()">
     <span class="btn-label">はじめる</span>
     <span class="btn-arrow">🚀</span>
   </button>
@@ -227,6 +279,20 @@ p,h1,h2,h3,span,li,.text-elem{
 </div>
 
 </div><!-- /app-wrapper -->
+
+<!-- ========== ホーム画面追加ガイド（初回のみ表示） ========== -->
+<div class="install-overlay" id="installOverlay">
+  <div class="install-card">
+    <img class="install-sonobo" src="assets/sonobo_2.png" alt="ソノボくん">
+    <p class="install-title">ホーム画面に追加しよう📱</p>
+    <p class="install-desc">FAST Journeyをホーム画面に追加すると、いつでもワンタップで起動できるよ！</p>
+    <div class="install-steps" id="installSteps"><!-- JSで動的に挿入 --></div>
+    <button class="btn-install-ok" id="installOkBtn">
+      <span>わかった！はじめる</span><span>🚀</span>
+    </button>
+    <button class="btn-install-skip" id="installSkipBtn">あとで追加する</button>
+  </div>
+</div>
 
 <script>
 // ===== 背景 =====
@@ -387,6 +453,78 @@ function typeText() {
   }
 }
 setTimeout(typeText, 1800);
+
+// ===== PWA: ホーム画面追加ガイド =====
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+function getPlatform() {
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/.test(ua);
+  if (isIOS) return 'ios';
+  if (isAndroid) return 'android';
+  return 'other';
+}
+function buildInstallSteps() {
+  const stepsEl = document.getElementById('installSteps');
+  const platform = getPlatform();
+  let steps;
+  if (platform === 'ios') {
+    steps = [
+      { icon: '📤', text: '画面下（または上部）の<b>共有ボタン</b>をタップ' },
+      { icon: '➕', text: 'メニューから<b>「ホーム画面に追加」</b>を選ぶ' },
+      { icon: '✅', text: '右上の<b>「追加」</b>をタップして完了！' }
+    ];
+  } else if (platform === 'android') {
+    steps = [
+      { icon: '⋮', text: '右上の<b>メニュー（⋮）</b>をタップ' },
+      { icon: '➕', text: '<b>「ホーム画面に追加」</b>または<b>「アプリをインストール」</b>を選ぶ' },
+      { icon: '✅', text: '<b>「追加」</b>または<b>「インストール」</b>をタップして完了！' }
+    ];
+  } else {
+    steps = [
+      { icon: '🌐', text: 'ブラウザのメニューから<b>「ホーム画面に追加」</b>を探してね' },
+      { icon: '✅', text: '追加すればアプリのように使えるよ！' }
+    ];
+  }
+  stepsEl.innerHTML = steps.map((s, i) => `
+    <div class="install-step">
+      <div class="install-step-num">${i + 1}</div>
+      <div class="install-step-icon">${s.icon}</div>
+      <div class="install-step-text">${s.text}</div>
+    </div>`).join('');
+}
+function closeInstallGuide() {
+  document.getElementById('installOverlay').classList.remove('show');
+  try { localStorage.setItem('fj_install_guide_shown', '1'); } catch (e) {}
+  setTimeout(() => warpTo('home.html'), 250);
+}
+function maybeShowInstallGuide() {
+  playSound('tap');
+  let alreadyShown = false;
+  try { alreadyShown = !!localStorage.getItem('fj_install_guide_shown'); } catch (e) {}
+  if (isStandalone() || alreadyShown) {
+    warpTo('home.html');
+    return;
+  }
+  buildInstallSteps();
+  document.getElementById('installOverlay').classList.add('show');
+}
+document.getElementById('installOkBtn').addEventListener('click', () => {
+  playSound('tap');
+  closeInstallGuide();
+});
+document.getElementById('installSkipBtn').addEventListener('click', () => {
+  closeInstallGuide();
+});
+
+// ===== Service Worker登録（オフライン対応） =====
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
