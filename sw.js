@@ -1,12 +1,12 @@
 // FAST Journey - Service Worker
 // シンプルなオフラインキャッシュ（ネットワーク優先 → 失敗時キャッシュ）
-const CACHE_NAME = 'fast-journey-cache-v1';
+const CACHE_NAME = 'fast-journey-cache-v2';
 const ASSETS_TO_CACHE = [
   './index.html',
   './manifest.json',
-  './assets/icon-192.png',
-  './assets/icon-512.png',
-  './assets/icon-180.png',
+  './assets/icon-192.png?v=2',
+  './assets/icon-512.png?v=2',
+  './assets/icon-180.png?v=2',
   './assets/sonobo_2.png'
 ];
 
