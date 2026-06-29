@@ -4,7 +4,9 @@ const CACHE_NAME = 'fast-journey-cache-v1';
 const ASSETS_TO_CACHE = [
   './index.html',
   './manifest.json',
-  './assets/sonobo_1.png',
+  './assets/icon-192.png',
+  './assets/icon-512.png',
+  './assets/icon-180.png',
   './assets/sonobo_2.png'
 ];
 
